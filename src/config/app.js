@@ -7,6 +7,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 // const rateLimit = require('express-rate-limit');
 const routes =require('../routes')
+  // mongoose.connect("mongodb+srv://tahahamdyfullstack02:4vhr4bjYRclC4OPk@tax-hub.5lzblws.mongodb.net/")
+
 const cookieParser = require('cookie-parser')
 const { corsOptions, mongoSanitizeOptions, helmetOptions, rateLimitOptions } = require('./options');
 function requestTime(req, res, next) {
