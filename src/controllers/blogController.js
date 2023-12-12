@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 // Create a new blog post
 const createBlog = asyncHandler(async (req, res) => {
   const { title } = req.body;
-
+  console.log(title);
   const existingBlog = await Blog.findOne({ title })
     .collation({ locale: "en", strength: 2 })
     .lean()
@@ -16,9 +16,7 @@ const createBlog = asyncHandler(async (req, res) => {
       .json({ message: "Blog with the same title already exists" });
   }
 
-  const image = req.file.path;
-
-  const newBlog = await Blog.create({ ...req.body, image });
+  const newBlog = await Blog.create(req.body);
   res.status(201).json({ status: "success", data: newBlog });
 });
 
@@ -47,15 +45,10 @@ const getBlogById = asyncHandler(async (req, res) => {
 // Update a blog post by ID
 const updateBlog = asyncHandler(async (req, res) => {
   const blogId = req.params.id;
-  const image = req.file.path;
 
-  const updatedBlog = await Blog.findByIdAndUpdate(
-    blogId,
-    { ...req.body, image },
-    {
-      new: true,
-    }
-  );
+  const updatedBlog = await Blog.findByIdAndUpdate(blogId, req.body, {
+    new: true,
+  });
 
   if (!updatedBlog) {
     return res.status(404).json({ status: "fail", message: "Blog not found" });
