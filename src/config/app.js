@@ -21,6 +21,7 @@ function requestTime(req, res, next) {
 app.use(requestTime)
 app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
+
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(xss());
 app.use(cors(corsOptions));
@@ -32,13 +33,18 @@ app.use(helmet(helmetOptions));
  * send request to register endpoint example
  * Method Post "/tax/v.1/auth/register"
  */
+const servicesRoute=require('../routes/serviceRoute')
+
 app.use('/tax/v.1', routes);
+app.use('/tax/v.1',servicesRoute)
+
 
 // to serve the images ,make them accessible by client
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 /** for not founded Routes */
-app.use('*', (req, res) => { res.status(404).json({ success: false, error: "Route Not Found" }) });
+app.use('*', (req, res) =>
+ { res.status(404).json({ success: false, error: "Route Not Found" }) });
 
 
 module.exports = app;
