@@ -8,6 +8,9 @@ const storageEngine = multer.diskStorage({
       case '/tax/v.1/users':
         dest = 'uploads/users';
         break;
+      case '/tax/v.1/papers':
+        dest = 'uploads/papers';
+        break;
       default:
         dest = 'src/uploads';
     }

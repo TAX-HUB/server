@@ -32,7 +32,7 @@ const updateUser = asyncHandler(async (req, res) => {
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const deletedUser = await userModel.findOneAndDelete({ _id: req.params._id });
+  const deletedUser = await userModel.findOneAndDelete({ _id: req.params.id });
   if (!deletedUser) return res.status(404).json({ success: false, error: "user not found." })
   const reply = `Username ${deletedUser.username} with ID ${deletedUser._id} deleted`
   res.status(200).json({ success: true, message: reply });
