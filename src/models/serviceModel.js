@@ -17,7 +17,7 @@ const serviceSchema= mongoose.Schema({
         type:String
     },
    
-    ststus:{
+    status:{
     type:String,
     enum:["complete","not_complete"]
     },
