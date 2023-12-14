@@ -9,13 +9,13 @@ const blogSchema = Joi.object({
     "any.required": "Description is required",
     "string.base": "Description must be a string",
   }),
-  tags: Joi.string().valid("GENERAL").default("GENERAL").messages({
+  tags: Joi.string().required().messages({
+    "any.required": "Tags is required",
     "string.base": "Tags must be a string",
-    "any.only": "Invalid tag value",
   }),
-  categories: Joi.string().valid("GENERAL").default("GENERAL").messages({
+  categories: Joi.string().required().messages({
+    "any.required": "Categories is required",
     "string.base": "Categories must be a string",
-    "any.only": "Invalid category value",
   }),
   image: Joi.string().required().messages({
     "any.required": "Image is required",
