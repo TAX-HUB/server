@@ -15,9 +15,20 @@ module.exports = {
             'string.pattern.base': 'Password must contain at least one digit, one lowercase and one uppercase letter, and be at least 8 characters long',
             'any.required': 'Password is required'
         }),
-        //............... others fields...... search how to customize the joi error message
     }),
+    loginUserSchema: Joi.object({
+        email: Joi.string().email().required().messages({
+            'any.required': 'Email is required.',
+            'string.empty': 'Email must not be empty.',
+            'string.email': 'Email must be a valid email address.',
+        }),
+        password: Joi.string().pattern(passwordRegex).required().messages({
+            'any.required': 'Password is required.',
+            'string.empty': 'Password must not be empty.',
+            'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
 
+        })
+    }),
 
 }
 
