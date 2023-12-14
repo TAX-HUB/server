@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../models/userModel')
 const joi = require('joi')
 const bcrypt = require('bcrypt')
+const cookieParser = require ('cookie-parser')
 const asyncHandler = require('express-async-handler')
 const router = express.Router();
 const getAllUsers = asyncHandler(async (req, res) => {
@@ -30,7 +31,7 @@ const createNewUser = asyncHandler(async (req, res) => {
       return res.status(409).json({ message: 'Duplicate username' })
     }
     const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
-
+ 
     const userObject = (schema = joi.object({
         username:joi.string().required(),
         email:joi.string().email().required(),
@@ -76,7 +77,10 @@ const createNewUser = asyncHandler(async (req, res) => {
     user.active = active
   
     if (password) {
-      user.password = await bcrypt.hash(password, 10) // salt rounds
+      user.password = await bcrypt.hash(password, 10)
+      res.cookie('userToken', 'yourGeneratedToken',{httpOnly:true})
+      res.send('User registered successfully')
+   
     }
     const{error} =User.schema.validate(req.body)
     if(error){
@@ -95,10 +99,6 @@ const createNewUser = asyncHandler(async (req, res) => {
       return res.status(400).json({ message: 'User ID Required' })
     }
   
-    const note = await Note.findOne({ user: id }).lean().exec()
-    if (note) {
-      return res.status(400).json({ message: 'User has assigned notes' })
-    }
   
     const user = await User.findById(id).exec()
   
