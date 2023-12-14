@@ -12,13 +12,11 @@ const blogSchema = new mongoose.Schema(
     },
     tags: {
       type: String,
-      enum: ["GENERAL"],
-      default: "GENERAL",
+      required: true,
     },
     categories: {
       type: String,
-      enum: ["GENERAL"],
-      default: "GENERAL",
+      required: true,
     },
     image: {
       type: String,
