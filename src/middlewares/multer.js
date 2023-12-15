@@ -4,18 +4,21 @@ const path = require("path");
 const storageEngine = multer.diskStorage({
   destination: function (req, file, cb) {
     let dest;
+    console.log("=============>",req.baseUrl);
     switch (req.baseUrl) {
-      case '/tax/v.1/users':
-        dest = 'uploads/users';
+      case '/tax/v1/users':
+        dest = 'src/uploads/users';
         break;
-      case '/tax/v.1/papers':
-        dest = 'uploads/papers';
+      case '/tax/v1/papers':
+        dest = 'src/uploads/papers';
         break;
-      case '/tax/v.1/blog':
-        dest = 'uploads/blogs';
+      case '/tax/v1/blog':
+        dest = 'src/uploads/blogs';
+        console.log("dest",dest);
+
         break;
-      case '/tax/v.1/service':
-        dest = 'uploads/services';
+      case '/tax/v1/service':
+        dest = 'src/uploads/services';
         break;
       default:
         dest = 'src/uploads';

@@ -17,10 +17,22 @@ const blogSchema = Joi.object({
     "any.required": "Categories is required",
     "string.base": "Categories must be a string",
   }),
-  image: Joi.string().required().messages({
-    "any.required": "Image is required",
-    "string.base": "Image must be a string",
+  image: Joi.string(),
+});
+const updateBlogSchema = Joi.object({
+  title: Joi.string().messages({
+    "string.base": "Title must be a string",
   }),
+  description: Joi.string().messages({
+    "string.base": "Description must be a string",
+  }),
+  tags: Joi.string().messages({
+    "string.base": "Tags must be a string",
+  }),
+  categories: Joi.string().messages({
+    "string.base": "Categories must be a string",
+  }),
+  image: Joi.string(),
 });
 
-module.exports = { blogSchema };
+module.exports = { blogSchema,updateBlogSchema };

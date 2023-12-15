@@ -3,14 +3,14 @@ const blogController = require("../controllers/blogController");
 const { authenticate, authorizeAdmin } = require("../middlewares/authenticate");
 const { upload } = require("../middlewares/multer");
 const { validate } = require("../middlewares/validate");
-const { blogSchema } = require("../validation/blogValidation");
+const { blogSchema, updateBlogSchema } = require("../validation/blogValidation");
 
 // Create a new blog post
 router.post(
   "/create",
   authorizeAdmin,
-  validate(blogSchema),
   upload.single("image"),
+  validate(blogSchema),
   blogController.createBlog
 );
 
@@ -24,7 +24,7 @@ router.get("/:id", authenticate, blogController.getBlogById);
 router.put(
   "/:id",
   authorizeAdmin,
-  validate(blogSchema),
+  validate(updateBlogSchema),
   upload.single("image"),
   blogController.updateBlog
 );

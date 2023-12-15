@@ -3,7 +3,7 @@ const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 module.exports = {
     registrationSchema: Joi.object().keys({
         username: Joi.string().min(3).max(30).required().messages({
-            'any.required': 'Shop name is required'
+            'any.required': 'user name is required'
         }),
         email: Joi.string().email().required().messages({
             'string.base': 'Email must be a string',

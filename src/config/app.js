@@ -34,10 +34,8 @@ app.use(helmet(helmetOptions));
  * send request to register endpoint example
  * Method Post "/tax/v.1/auth/register"
  */
-const servicesRoute=require('../routes/serviceRoute')
 
-app.use('/tax/v.1', routes);
-app.use('/tax/v.1',servicesRoute)
+app.use('/tax/v1', routes);
 
 
 // to serve the images ,make them accessible by client
