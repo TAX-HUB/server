@@ -8,17 +8,18 @@ const { serviceSchema } = require("../validation/serviceValidation");
 router
   .route("/")
   .get(authenticate, servicesController.getServices)
-  .post(
+  
+ router.post('/create',
     authorizeAdmin,
     validate(serviceSchema),
-    upload.single("img"),
+    upload.single("image"),
     servicesController.createService
   );
 
 router
   .route("/:id")
   .get(authenticate, servicesController.getOneService)
-  .patch(authorizeAdmin, upload.single("img"), servicesController.updateService)
+  .patch(authorizeAdmin, upload.single("image"), servicesController.updateService)
   .delete(authorizeAdmin, servicesController.deleteService);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Service = require("../models/serviceModel");
+const { generateSerialCode } = require("../utility/uniqueSerialCode");
 
 const getServices = asyncHandler(async (req, res, next) => {
   const services = await Service.find({});
@@ -22,6 +23,17 @@ const createService = asyncHandler(async (req, res, next) => {
   if (req.file && req.file.filename) {
     req.body.img = `service/${req.file.filename}`;
   }
+  console.log(req.body);
+  let serialCode;
+  let isUnique = false;
+  while (!isUnique) {
+    serialCode = await generateSerialCode();
+    const existingService = await Service.findOne({ serial_code: serialCode });
+    if (!existingService) {
+      isUnique = true;
+    }
+  }
+  req.body.serial_code = serialCode;
   const newService = new Service(req.body);
   await newService.save();
   res.status(201).json({ status: "Success", data: { service: newService } });

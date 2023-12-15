@@ -1,23 +1,19 @@
-const Joi = require('joi')
-// const Service=require("../models/serviceModel");
-const validate=require("../middlewares/validate")
+const Joi = require("joi");
+const serviceSchema = Joi.object({
+  title: Joi.string().required().messages({
+    'string.base': 'Title must be a string',
+    'any.required': 'Title is required',
+  }),
 
-const serviceSchema=Joi.object({
-title:Joi.string().required(),
+  description: Joi.string().required().messages({
+    'string.base': 'Description must be a string',
+    'any.required': 'Description is required',
+  }),
 
-description:Joi.string().required(),
+  img: Joi.string(),
+  status: Joi.string().messages({
+    'string.base': 'Status must be a string',
+  }),
+});
 
-
-img:Joi.string().required(),
-
-serial_code:Joi.string(),
-
-ststus:Joi.string(),
-createdAt:Joi.date(),
-  updateAt:Joi.date(),
-
-
-}
-
-)
-module.exports={serviceSchema};
+module.exports = { serviceSchema };
