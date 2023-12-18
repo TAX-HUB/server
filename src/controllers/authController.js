@@ -16,4 +16,9 @@ module.exports = {
         if (!matchPassword) return res.status(400).json({ success: false, error: "Incorrect password. Please check your password and try again." });
         createSendToken(user, 200, res);
     }),
+    getCurrentUserCtrl: asyncHandler(async (req, res) => {
+        const user = await User.findOne({ _id: req.user._id });
+        if (!user) return res.status(404).json({ success: false, error: "user not found." })
+        res.status(200).json({ success: true, data: user });
+    }),
 }

@@ -1,6 +1,6 @@
 module.exports = {
   corsOptions: {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:5173"],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
     credentials: true,
     optionSuccessStatus: 200,

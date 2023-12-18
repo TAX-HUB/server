@@ -1,8 +1,7 @@
 const Joi = require("joi");
 module.exports = {
-  paperValidationSchema: Joi.object().keys({
-    paper: Joi.string(),
-
+  paperValidationSchema:Joi.object().keys({
+   paper: Joi.string(),
     title: Joi.string().required().trim().messages({
       "string.base": "Title must be a string",
       "any.required": "Title is required",
@@ -17,5 +16,6 @@ module.exports = {
       "boolean.base": "Company must be a boolean",
       "any.required": "Company is required",
     }),
-  }),
+}),
+
 };
