@@ -7,9 +7,11 @@ const { paperValidationSchema } = require("../validation/paperValidation");
 router
   .route("/")
   .post(authenticate,validate(paperValidationSchema), upload.single("image"), papersController.createPaper)
-  .get(authenticate, papersController.getAllPapers);
+  .get(authenticate, papersController.getAllPapers)
+  
 router
   .route("/:id")
   .patch(authenticate, upload.single("image"), papersController.updatePaper)
-  .delete(authenticate, papersController.deletePaper);
+  .delete(authenticate, papersController.deletePaper)
+  .get(authenticate, papersController.getPaper);
 module.exports = router;
