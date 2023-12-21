@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(xss());
 app.use(cors(corsOptions));
 app.use(mongoSanitize(mongoSanitizeOptions));
-app.use(helmet(helmetOptions));
+// app.use(helmet(helmetOptions));
 // app.use(rateLimit(rateLimitOptions));
 
 /**

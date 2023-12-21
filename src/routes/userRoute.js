@@ -4,6 +4,7 @@ const { validate } = require("../middlewares/validate");
 const {
   createNewUserSchema,
   updateUserSchema,
+  updateUserProfile,
 } = require("../validation/userValidation");
 const { authenticate, authorizeAdmin } = require("../middlewares/authenticate");
 const { upload } = require("../middlewares/multer");
@@ -12,16 +13,18 @@ router
   .route("/")
   .all(authorizeAdmin)
   .get(usersController.getAllUsers)
-  .post(validate(createNewUserSchema), usersController.createNewUser);
 router
   .route("/:id")
   .get(authenticate, usersController.getOneUser)
-  .patch(
-    authenticate,
-    upload.single("image"),
-    validate(updateUserSchema),
-    usersController.updateUser
-  )
-  .delete(authorizeAdmin, usersController.deleteUser);
-
+  // .patch(
+  //   authenticate,
+  //   upload.single("image"),
+  //   validate(updateUserSchema),
+  //   usersController.updateUser
+  // )
+router.patch('/update-user-address' ,authenticate,usersController.updateUserAddress)
+router.patch("/update-user-profile", authenticate, upload.single("image") , validate(updateUserProfile),usersController.updateUserProfileCtrl);
+router.delete("/delete-by-admin/:id", authorizeAdmin, usersController.deleteUser);
+// router.patch("/update-by-admin/:id", authorizeAdmin, usersController.updateUser);
+router.post("/create-by-admin",validate(createNewUserSchema), usersController.createNewUser)
 module.exports = router;

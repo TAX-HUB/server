@@ -5,7 +5,7 @@ const papersController = {
     if (req.file && req.file.filename) {
       req.body.paper = `papers/${req.file.filename}`;
     }
-    let newPaper = new Paper({ ...req.body, owner: req.user._id });
+    let newPaper = new Paper({ ...req.body });
     await newPaper.save();
     res.send({ data : newPaper });
   }),

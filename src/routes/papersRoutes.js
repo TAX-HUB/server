@@ -6,8 +6,8 @@ const { validate } = require("../middlewares/validate");
 const { paperValidationSchema } = require("../validation/paperValidation");
 router
   .route("/")
-  .post(authenticate,validate(paperValidationSchema), upload.single("image"), papersController.createPaper)
-  .get(authenticate, papersController.getAllPapers)
+  .post(validate(paperValidationSchema), upload.single("image"), papersController.createPaper)
+  .get(papersController.getAllPapers)
   
 router
   .route("/:id")

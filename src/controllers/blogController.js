@@ -25,11 +25,8 @@ const createBlog = asyncHandler(async (req, res) => {
 
 // Get all blog posts
 const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find();
-  if (!blogs) {
-    return res.status(400).json({ message: "No Blogs found" });
-  }
-
+  console.log("ggggggggggggggg");
+  const blogs = await Blog.find({});
   res.status(200).json({ status: "success", data: blogs });
 });
 

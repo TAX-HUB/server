@@ -28,9 +28,9 @@ const paperSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    // required: true,
   },
 });
-
+ 
 const Paper = model("Paper", paperSchema);
 module.exports = Paper;

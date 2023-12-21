@@ -6,7 +6,7 @@ const storageEngine = multer.diskStorage({
     let dest;
     console.log("=============>",req.baseUrl);
     switch (req.baseUrl) {
-      case '/tax/v1/users':
+      case '/tax/v1/user':
         dest = 'src/uploads/users';
         break;
       case '/tax/v1/papers':

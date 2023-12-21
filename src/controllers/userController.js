@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const asyncHandler = require("express-async-handler");
 const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find({ _id: { $ne: req.user._id } });
   res.status(200).json(users);
 });
 const getOneUser = asyncHandler(async (req, res) => {
@@ -21,33 +21,56 @@ const createNewUser = asyncHandler(async (req, res) => {
   await user.save();
   res.status(201).json({ data: user, message: `New user ${username} created` });
 });
-
-const updateUser = asyncHandler(async (req, res) => {
-  const { password } = req.body;
-  if (req.file && req.file.filename)
-    req.body.profileImage = `users/${req.file.filename}`;
-  const user = await User.findById(req.params.id);
-  if (!user) return res.status(400).json({ message: "User not found" });
-  const duplicate = await User.findOne({
-    _id: { $ne: req.params.id },
-    email: req.body.email,
-  });
-  if (duplicate)
-    return res
-      .status(400)
-      .json({ success: false, error: `This email already in use ..!` });
-  if (password) {
-    const genSalt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, genSalt);
-    req.body.password = hash;
-  }
+const updateUserProfileCtrl = asyncHandler(async (req, res) => {
+  console.log("req.file", req.file);
+  if (req.file) req.body.profileImage = `users/${req.file.filename}`;
   const updatedUser = await User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.user._id },
     req.body,
     { new: true }
   );
-  res.json({ data: updateUser, message: `${updatedUser.username} updated` });
+  if (!updatedUser)
+    return res.status(404).json({ success: false, error: "user not found." });
+  res.status(200).json({ success: true, data: updatedUser });
 });
+const updateUserAddress = asyncHandler(async (req, res) => {
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    req.body,
+    { new: true }
+  );
+  if (!updatedUser)
+    return res.status(404).json({ success: false, error: "user not found." });
+  res.status(200).json({ success: true, data: updatedUser });
+});
+// const updateUser = asyncHandler(async (req, res) => {
+//   const { password } = req.body;
+//   const { id } = req.params;
+//   if (req.file && req.file.filename) {
+//     req.body.profileImage = `users/${req.file.filename}`;
+//   }
+//   // const user = await User.findOne({ _id: id });
+//   if (!user) return res.status(400).json({ message: "User not found" });
+//   const duplicate = await User.findOne({
+//     _id: { $ne: req.params.id },
+//     email: req.body.email,
+//   });
+//   if (duplicate)
+//     return res
+//       .status(400)
+//       .json({ success: false, error: `This email already in use ..!` });
+//   if (password) {
+//     const genSalt = await bcrypt.genSalt(10);
+//     const hash = await bcrypt.hash(password, genSalt);
+//     req.body.password = hash;
+//   }
+//   const updatedUser = await User.findOneAndUpdate(
+//     { _id: req.params.id },
+//     req.body,
+//     { new: true }
+//   );
+//   res.json({ data: updateUser, message: `${updatedUser.username} updated` });
+// });
 
 const deleteUser = asyncHandler(async (req, res) => {
   const deletedUser = await User.findOneAndDelete({ _id: req.params.id });
@@ -60,7 +83,9 @@ const deleteUser = asyncHandler(async (req, res) => {
 module.exports = {
   getAllUsers,
   createNewUser,
-  updateUser,
+  // updateUser,
+  updateUserAddress,
   deleteUser,
   getOneUser,
+  updateUserProfileCtrl,
 };
