@@ -15,7 +15,7 @@ const getOneService = asyncHandler(async (req, res, next) => {
   if (!service) {
     res.status(404).json({ error: `not service for this ${id}` });
   } else {
-    res.status(201).json({ status: "Success", data: service });
+    res.status(201).json({success:true, data: service });
   }
 });
 
@@ -36,7 +36,7 @@ const createService = asyncHandler(async (req, res, next) => {
   req.body.serial_code = serialCode;
   const newService = new Service(req.body);
   await newService.save();
-  res.status(201).json({ status: "Success", data: { service: newService } });
+  res.status(201).json({ success:true, data: newService  });
 });
 const updateService = asyncHandler(async (req, res, next) => {
   if (req.file && req.file.filename) {
@@ -46,14 +46,14 @@ const updateService = asyncHandler(async (req, res, next) => {
   if (!service) {
     return res
       .status(404)
-      .json({ status: "fail", error: `not service for this id ` });
+      .json({ success:false, error: `not service for this id ` });
   }
   const updatedService = await Service.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
     { new: true }
   );
-  res.status(201).json({ status: "success", data: { updatedService } });
+  res.status(201).json({ success:true, data:  updatedService  });
 });
 
 const deleteService = asyncHandler(async (req, res, next) => {
@@ -61,10 +61,10 @@ const deleteService = asyncHandler(async (req, res, next) => {
   if (!service) {
     return res
       .status(404)
-      .json({ status: "fail", error: `not service for this id ` });
+      .json({ status:false, error: `not service for this id ` });
   }
   const deletedService = await Service.deleteOne({ _id: req.params.id });
-  res.json({ data: { delete: deletedService } });
+  res.json({ delete: deletedService });
 });
 module.exports = {
   getServices,
