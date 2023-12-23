@@ -17,9 +17,12 @@ module.exports = {
         createSendToken(user, 200, res);
     }),
     getCurrentUserCtrl: asyncHandler(async (req, res) => {
-    
         const user = await User.findOne({ _id: req.user._id });
         if (!user) return res.status(404).json({ success: false, error: "user not found." })
         res.status(200).json({ success: true, data: user });
     }),
+    logOut : asyncHandler(async(req,res)=>{
+        res.clearCookie("jwt")
+        res.status(200).json({success:true})
+    })
 }

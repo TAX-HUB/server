@@ -25,8 +25,7 @@ const createBlog = asyncHandler(async (req, res) => {
 
 // Get all blog posts
 const getAllBlogs = asyncHandler(async (req, res) => {
-  console.log("ggggggggggggggg");
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).sort({ createdAt: -1 });
   res.status(200).json({ status: "success", data: blogs });
 });
 

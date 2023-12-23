@@ -4,9 +4,7 @@ const { generateSerialCode } = require("../utility/uniqueSerialCode");
 
 const getServices = asyncHandler(async (req, res, next) => {
   const services = await Service.find({});
-  res.status(201).json({
-    data: services,
-  });
+  res.status(201).json({ data: services });
 });
 
 const getOneService = asyncHandler(async (req, res, next) => {
@@ -34,9 +32,9 @@ const createService = asyncHandler(async (req, res, next) => {
     }
   }
   req.body.serial_code = serialCode;
-  const newService = new Service(req.body);
+  const newService = new Service({ ...req.body, admin: req.user._id });
   await newService.save();
-  res.status(201).json({ status: "Success", data: { service: newService } });
+  res.status(201).json({ data: newService });
 });
 const updateService = asyncHandler(async (req, res, next) => {
   if (req.file && req.file.filename) {

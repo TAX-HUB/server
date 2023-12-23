@@ -4,15 +4,15 @@ const { authenticate, authorizeAdmin } = require("../middlewares/authenticate");
 const { upload } = require("../middlewares/multer");
 const { validate } = require("../middlewares/validate");
 const { serviceSchema } = require("../validation/serviceValidation");
-
-router
-  .route("/")
-  .get(authenticate, servicesController.getServices)
+router.get("/get-all",authorizeAdmin,servicesController.getServices)
+// router
+//   .route("/")
+//   .get(authenticate, )
   
  router.post('/create',
     authorizeAdmin,
-    validate(serviceSchema),
     upload.single("image"),
+    validate(serviceSchema),
     servicesController.createService
   );
 

@@ -43,34 +43,34 @@ const updateUserAddress = asyncHandler(async (req, res) => {
     return res.status(404).json({ success: false, error: "user not found." });
   res.status(200).json({ success: true, data: updatedUser });
 });
-// const updateUser = asyncHandler(async (req, res) => {
-//   const { password } = req.body;
-//   const { id } = req.params;
-//   if (req.file && req.file.filename) {
-//     req.body.profileImage = `users/${req.file.filename}`;
-//   }
-//   // const user = await User.findOne({ _id: id });
-//   if (!user) return res.status(400).json({ message: "User not found" });
-//   const duplicate = await User.findOne({
-//     _id: { $ne: req.params.id },
-//     email: req.body.email,
-//   });
-//   if (duplicate)
-//     return res
-//       .status(400)
-//       .json({ success: false, error: `This email already in use ..!` });
-//   if (password) {
-//     const genSalt = await bcrypt.genSalt(10);
-//     const hash = await bcrypt.hash(password, genSalt);
-//     req.body.password = hash;
-//   }
-//   const updatedUser = await User.findOneAndUpdate(
-//     { _id: req.params.id },
-//     req.body,
-//     { new: true }
-//   );
-//   res.json({ data: updateUser, message: `${updatedUser.username} updated` });
-// });
+const updateUser = asyncHandler(async (req, res) => {
+  const { password } = req.body;
+  const { id } = req.params;
+  if (req.file && req.file.filename) {
+    req.body.profileImage = `users/${req.file.filename}`;
+  }
+  const user = await User.findOne({ _id: id });
+  if (!user) return res.status(400).json({ message: "User not found" });
+  const duplicate = await User.findOne({
+    _id: { $ne: req.params.id },
+    email: req.body.email,
+  });
+  if (duplicate)
+    return res
+      .status(400)
+      .json({ success: false, error: `This email already in use ..!` });
+  if (password) {
+    const genSalt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, genSalt);
+    req.body.password = hash;
+  }
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true }
+  );
+  res.json({ data: updateUser, message: `${updatedUser.username} updated` });
+});
 
 const deleteUser = asyncHandler(async (req, res) => {
   const deletedUser = await User.findOneAndDelete({ _id: req.params.id });
@@ -83,7 +83,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 module.exports = {
   getAllUsers,
   createNewUser,
-  // updateUser,
+  updateUser,
   updateUserAddress,
   deleteUser,
   getOneUser,

@@ -25,6 +25,6 @@ router
 router.patch('/update-user-address' ,authenticate,usersController.updateUserAddress)
 router.patch("/update-user-profile", authenticate, upload.single("image") , validate(updateUserProfile),usersController.updateUserProfileCtrl);
 router.delete("/delete-by-admin/:id", authorizeAdmin, usersController.deleteUser);
-// router.patch("/update-by-admin/:id", authorizeAdmin, usersController.updateUser);
+router.patch("/update-by-admin/:id", authorizeAdmin, usersController.updateUser);
 router.post("/create-by-admin",validate(createNewUserSchema), usersController.createNewUser)
 module.exports = router;

@@ -7,16 +7,16 @@ const papersController = {
     }
     let newPaper = new Paper({ ...req.body });
     await newPaper.save();
-    res.send({ data : newPaper });
+    res.send({ data: newPaper });
   }),
 
   getPaper: asyncHandler(async (req, res) => {
-    let papers = await Paper.find({ owner: req.user._id });
-    res.send({ data: papers });
+    let paper = await Paper.findOne({ _id: req.params.id });
+    res.send({ data: paper });
   }),
   getAllPapers: asyncHandler(async (req, res) => {
     let Papers = await Paper.find({});
-    res.send({ data:Papers });
+    res.send({ data: Papers });
   }),
 
   updatePaper: asyncHandler(async (req, res, next) => {

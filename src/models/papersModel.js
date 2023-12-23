@@ -12,25 +12,24 @@ const paperSchema = new Schema({
     required: true,
     enum: ["valid", "not valid"],
   },
-
-  uploadDate: {
-    type: Date,
-    default: Date.now(),
-  },
-  lastModified: {
-    type: Date,
-    default: Date.now(),
+  category: {
+    type: String,
   },
   company: {
     type: Boolean,
     required: true,
+  },
+  description: {
+    type: String,
   },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
     // required: true,
   },
+},{
+  timestamps:true
 });
- 
+
 const Paper = model("Paper", paperSchema);
 module.exports = Paper;
