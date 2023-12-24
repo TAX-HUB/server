@@ -4,8 +4,8 @@ const asyncHandler = require("express-async-handler");
 // Create a new blog post
 const createBlog = asyncHandler(async (req, res) => {
   if (req.file && req.file.filename) {
-    req.body.image = `blogs/${req.file.filename}`
-  };
+    req.body.image = `blogs/${req.file.filename}`;
+  }
   const { title } = req.body;
   console.log(title);
   const existingBlog = await Blog.findOne({ title })
@@ -44,8 +44,8 @@ const getBlogById = asyncHandler(async (req, res) => {
 const updateBlog = asyncHandler(async (req, res) => {
   const blogId = req.params.id;
   if (req.file && req.file.filename) {
-    req.body.image = `blogs/${req.file.filename}`
-  };
+    req.body.image = `blogs/${req.file.filename}`;
+  }
   const updatedBlog = await Blog.findByIdAndUpdate(blogId, req.body, {
     new: true,
   });
