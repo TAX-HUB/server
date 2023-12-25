@@ -4,7 +4,8 @@ const messageSchema = new Schema(
     service: { type: Schema.Types.ObjectId, ref: "Service" },
     user: { type: Schema.Types.ObjectId, ref: "User" },
     admin: { type: Schema.Types.ObjectId, ref: "User" },
-    message: { type: String },
+    userMessage: { type: String },
+    adminMessage: { type: String },
   },
   {
     timestamps: true,

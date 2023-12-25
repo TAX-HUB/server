@@ -7,9 +7,13 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 const getOneUser = asyncHandler(async (req, res) => {
+ console.log("ccccccccccccccccccccccccccccccccccccc", req.params.id);
   const user = await User.findOne({ _id: req.params.id });
-  if (!user)
-    return res.status(404).json({ success: false, error: "user not found." });
+  console.log(user);
+  if (!user){
+     return res.status(404).json({ success: false, error: "user not found." });
+  }
+  console.log("hhhh");
   res.status(200).json({ success: true, data: user });
 });
 const createNewUser = asyncHandler(async (req, res) => {

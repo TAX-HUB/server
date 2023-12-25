@@ -13,15 +13,7 @@ router
   .route("/")
   .all(authorizeAdmin)
   .get(usersController.getAllUsers)
-router
-  .route("/:id")
-  .get(authenticate, usersController.getOneUser)
-  // .patch(
-  //   authenticate,
-  //   upload.single("image"),
-  //   validate(updateUserSchema),
-  //   usersController.updateUser
-  // )
+router.get("/:id",authenticate, usersController.getOneUser)
 router.patch('/update-user-address' ,authenticate,usersController.updateUserAddress)
 router.patch("/update-user-profile", authenticate, upload.single("image") , validate(updateUserProfile),usersController.updateUserProfileCtrl);
 router.delete("/delete-by-admin/:id", authorizeAdmin, usersController.deleteUser);
