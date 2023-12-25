@@ -2,55 +2,7 @@ const { default: mongoose } = require("mongoose");
 const Message = require("../models/messageModel");
 const asyncHandler = require("express-async-handler");
 module.exports = {
- 
-  // getAllAdminChats: asyncHandler(async (req, res) => {
-  //   const { _id: adminId } = req.user;
-    
-  //   // Find all services where the specified admin has sent messages
-  //   const services = await Message.find({ admin: adminId }).distinct('service').exec();
-  // console.log(services.length);
-  //   // Fetch all messages related to the found services
-  //   const serviceChats = await Message.find({ service: { $in: services } })
-  //     .populate("user", "email username role")
-  //     .populate("service", "title description status")
-  //     .exec();
-  
-  //   const groupedMessages = serviceChats.reduce((acc, message) => {
-  //     const { user, admin, service, userMessage, adminMessage, createdAt, updatedAt } = message;
-  
-  //     if (!acc[user._id]) {
-  //       acc[user._id] = {
-  //         user,
-  //         admin,
-  //         service,
-  //         adminMessages: [],
-  //         userMessages: [],
-  //         firstMessageCreatedAt: createdAt,
-  //         lastMessageUpdatedAt: createdAt,
-  //       };
-  //     }
-  
-  //     if (userMessage) {
-  //       acc[user._id].userMessages.push({ message: userMessage, createdAt, updatedAt });
-  //     } else if (adminMessage) {
-  //       acc[user._id].adminMessages.push({ message: adminMessage, createdAt, updatedAt });
-  //     }
-  
-  //     if (createdAt < acc[user._id].firstMessageCreatedAt) {
-  //       acc[user._id].firstMessageCreatedAt = createdAt;
-  //     }
-  //     if (updatedAt > acc[user._id].lastMessageUpdatedAt) {
-  //       acc[user._id].lastMessageUpdatedAt = updatedAt;
-  //     }
-  
-  //     return acc;
-  //   }, {});
-  
-  //   const result = Object.values(groupedMessages);
-  //   console.log(result);
-  //   res.status(200).json({ data: result });
-  // }),
-  getAllAdminChats: asyncHandler(async (req, res) => {
+ getAllAdminChats: asyncHandler(async (req, res) => {
     const { _id: adminId } = req.user;
     const services = await Message.find({ admin: adminId }).distinct('service').exec();
 
